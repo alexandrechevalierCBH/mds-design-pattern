@@ -21,7 +21,6 @@ class DBConnector
                 E_USER_ERROR
             );
         }
-        echo "ok";
     }
 
     /**
