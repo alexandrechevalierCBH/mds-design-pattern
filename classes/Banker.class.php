@@ -5,23 +5,23 @@ class Banker
 {
 
 
-    private function getBalance()
+    public function getBalance()
     {
         $balance = Wallet::getBalance();
         echo $balance;
         return $balance;
     }
 
-    private static function canBuy($amount): bool
+    public static function canBuy($amount): bool
     {
-        if ($this->getBalance() >= $amount) {
+        if (self::getBalance() >= $amount) {
             return true;
         } else {
             return false;
         }
     }
 
-    private function getOseille($amount)
+    public function getOseille($amount)
     {
     }
 }
