@@ -2,9 +2,9 @@
 require 'Banker.class.php';
 class Trader 
 {
-    public function buy($amount)
+    public function buy($amount, $qty)
     {
-        $bank = Banker::canBuy($amount);
+        $bank = Banker::canBuy($amount, $qty);
         if ($bank) {
             echo 'I buy crypto';
         }
@@ -13,9 +13,9 @@ class Trader
         }
     }
 
-    public function sell($amount)
+    public function sell($amount, $qty)
     {
-        $bank = Banker::getOseille($amount);
+        $bank = Banker::getOseille($amount, $qty);
         echo 'Je vend de la crypto';
 
     }
