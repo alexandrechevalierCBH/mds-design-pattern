@@ -1,21 +1,9 @@
 <?php
-Class Platform {
-    private $_nom;
-    private $_link;
+interface Platform {
 
-    public function __construct($nom, $link)
-    {
-        $this->_nom = $nom;
-        $this->_link = $link;
-    }
+    public function getTrader();
 
-    public function getNom(){
-        return $this->_nom;
-    }
-
-    public function getLink(){
-        return $this->_link;
-    }
+    public function getAnalyser();
 
 }
 ?>
