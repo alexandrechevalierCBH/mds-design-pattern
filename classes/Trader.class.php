@@ -1,20 +1,21 @@
 <?php 
+require 'Banker.class.php';
 class Trader 
 {
     protected function buy($amount)
     {
-        $bank = New Banker::canBuy($amount);
+        $bank = Banker::canBuy($amount);
         if ($bank) {
-            echo 'I buy money';
+            echo 'I buy crypto';
         }
         else {
             echo 'Not enouth money';
         }
     }
 
-    protected function sell($amout)
+    protected function sell($amount)
     {
-        $bank = New Banker::getOseille($amount);
+        $bank = Banker::getOseille($amount);
         echo 'Je vend de la crypto';
 
     }

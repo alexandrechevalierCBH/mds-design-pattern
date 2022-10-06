@@ -21,7 +21,7 @@ class Banker
         }
     }
 
-    public function getOseille($amount)
+    public static function getOseille($amount)
     {
     }
 }
