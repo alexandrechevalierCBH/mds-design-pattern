@@ -5,10 +5,9 @@ class Banker
 {
 
 
-    public function getBalance()
+    public static function getBalance()
     {
         $balance = Wallet::getBalance();
-        echo $balance;
         return $balance;
     }
 

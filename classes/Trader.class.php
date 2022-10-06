@@ -2,7 +2,7 @@
 require 'Banker.class.php';
 class Trader 
 {
-    protected function buy($amount)
+    public function buy($amount)
     {
         $bank = Banker::canBuy($amount);
         if ($bank) {
@@ -13,11 +13,10 @@ class Trader
         }
     }
 
-    protected function sell($amount)
+    public function sell($amount)
     {
         $bank = Banker::getOseille($amount);
         echo 'Je vend de la crypto';
 
     }
 }
-?>
