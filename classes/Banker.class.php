@@ -12,7 +12,7 @@ class Banker
         return $balance;
     }
 
-    private function canBuy($amount): bool
+    private static function canBuy($amount): bool
     {
         if ($this->getBalance() >= $amount) {
             return true;
