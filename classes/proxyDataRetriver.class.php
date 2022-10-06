@@ -10,12 +10,13 @@ Class ProxyDataRetriever{
     }
 
     public function getData(){
-        if(time() - $this->dataRetriever->getLastUpdate > 60){
+        if(time() - $this->getLastUpdate > 60){
             $this->data = $this->dataRetriever->getData();
             $this->getLastUpdate = time();
         }
         return $this->data;
     }
+
     public function getPairPrice($pair){
         return $this->dataRetriever->getPairPrice($pair);
     }
