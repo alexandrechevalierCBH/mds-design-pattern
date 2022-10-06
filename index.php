@@ -10,4 +10,4 @@ $db = DBConnector::getInstance()->getConnection();
 $balance = Wallet::getBalance();
 
 $testbuy = new Trader();
-$testbuy->buy(5001);
+$testbuy->buy(5000, 1);

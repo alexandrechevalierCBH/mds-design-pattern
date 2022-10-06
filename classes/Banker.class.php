@@ -12,7 +12,8 @@ class Banker
     public static function canBuy($amount, $qty): bool
     {
         if (self::getBalance() >= $amount) {
-            $operation = self::createOperation($amount, 'buy', $qty);
+            //$operation = self::createOperation($amount, 'buy', $qty);
+            //Wallet::feedTempOp($operation);
             return true;
         } else {
             return false;

@@ -5,6 +5,7 @@ class Wallet
 {
 
     private $balance;
+    private $tempOp = [];
 
     public function __construct($balance)
     {
@@ -21,4 +22,12 @@ class Wallet
         $row = $result->fetch_assoc();
         return $row['balance'];
     }
+
+    public static function feedTempOp($object)
+        {
+            echo 'oui';
+            array_push($tempOp, $object);
+            var_dump($tempOp);
+        }
+    
 }
