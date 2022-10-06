@@ -17,17 +17,16 @@ class Wallet
         // get the balance from the database
         $db = DBConnector::getInstance();
         $conn = $db->getConnection();
-        $sql = "SELECT * FROM balance";
+        $sql = "SELECT * FROM wallet";
         $result = $conn->query($sql);
         $row = $result->fetch_assoc();
         return $row['balance'];
     }
 
     public static function feedTempOp($object)
-        {
-            $tempOp = [];
-            array_push($tempOp, $object);
-            //var_dump($tempOp);
-        }
-    
+    {
+        $tempOp = [];
+        array_push($tempOp, $object);
+        //var_dump($tempOp);
+    }
 }
