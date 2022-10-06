@@ -25,9 +25,9 @@ class Wallet
 
     public static function feedTempOp($object)
         {
-            echo 'oui';
+            $tempOp = [];
             array_push($tempOp, $object);
-            var_dump($tempOp);
+            //var_dump($tempOp);
         }
     
 }

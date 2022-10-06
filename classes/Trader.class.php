@@ -6,7 +6,7 @@ class Trader
     {
         $bank = Banker::canBuy($amount, $qty);
         if ($bank) {
-            echo 'I buy crypto';
+            echo 'I buy crypto' . '<br/>';
         }
         else {
             echo 'Not enouth money';

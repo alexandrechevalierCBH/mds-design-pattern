@@ -11,3 +11,6 @@ $balance = Wallet::getBalance();
 
 $testbuy = new Trader();
 $testbuy->buy(5000, 1);
+
+$testbuy->buy(4000, 1);
+

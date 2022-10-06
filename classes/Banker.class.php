@@ -1,6 +1,7 @@
 <?php
 
 require_once 'Wallet.class.php';
+require_once 'Operation.class.php';
 class Banker
 {
     public static function getBalance()
@@ -12,8 +13,8 @@ class Banker
     public static function canBuy($amount, $qty): bool
     {
         if (self::getBalance() >= $amount) {
-            //$operation = self::createOperation($amount, 'buy', $qty);
-            //Wallet::feedTempOp($operation);
+            $operation = new Operation('buy', $amount, $qty, '2020-01-01');
+            Wallet::feedTempOp($operation);
             return true;
         } else {
             return false;
