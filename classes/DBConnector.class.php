@@ -6,7 +6,7 @@ class DBConnector
     private $host = 'localhost';
     private $user = 'root';
     private $pass = '';
-    private $name = 'test';
+    private $name = 'trade-bot';
 
     /**
      * The function is private, so it can only be called from within the class. It creates a new
@@ -17,10 +17,11 @@ class DBConnector
         $this->conn = new mysqli($this->host, $this->user, $this->pass, $this->name);
         if (mysqli_connect_error()) {
             trigger_error(
-                "Failed to conencto to MySQL: " . mysql_connect_error(),
+                "Failed to conencto to MySQL: " . mysqli_connect_error(),
                 E_USER_ERROR
             );
         }
+        echo "ok";
     }
 
     /**
@@ -36,11 +37,6 @@ class DBConnector
         return self::$instance;
     }
 
-    /**
-     * It returns the connection object
-     * 
-     * @return The connection to the database.
-     */
     public function getConnection()
     {
         return $this->conn;
