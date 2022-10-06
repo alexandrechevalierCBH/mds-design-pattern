@@ -14,6 +14,8 @@ Class Analyser {
             array_push($LastPrices, $price);
             sleep( seconds: 3);
         }
+
+        return $LastPrices;
     }
 
     public function Analyse($LastPrices){
@@ -23,3 +25,4 @@ Class Analyser {
     }
 
 }
+?>
