@@ -3,10 +3,10 @@ class DBConnector
 {
     private static $instance = null;
     private $conn;
-    private $host = 'localhost';
-    private $user = 'root';
-    private $pass = '';
-    private $name = 'trade-bot';
+    private $host = '153.92.220.201';
+    private $user = 'u670004846_tradebot';
+    private $pass = '47Jdn8Bcr@4teZG';
+    private $name = 'u670004846_tradebot';
 
     /**
      * The function is private, so it can only be called from within the class. It creates a new
