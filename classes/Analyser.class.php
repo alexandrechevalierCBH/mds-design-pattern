@@ -1,19 +1,23 @@
 <?php
 require "Algorithm.class.php";
 require "DataRetriever.class.php";
+include 'proxyDataRetriver.class.php';
 Class Analyser {
 
+    private $dtr;
+    private $proxy;
+
+    public function __construct(){
+        $this->dtr = new DataRetriever("https://api.binance.com/api/v3/ticker/price");
+        $this->proxy = new ProxyDataRetriever($this->dtr);
+    }
+
+
     public function AddArray($ArrayPrice){
-        $dtr = new DataRetriever("https://api.binance.com/api/v3/ticker/price");
-        $proxy = new ProxyDataRetriever($dtr);
 
-        while(true){
-            $data= $proxy->getData();
-            $price = $proxy->getPairPrice("BTCUSDT");
-            array_push($ArrayPrice, $price);
-            sleep( seconds: 3);
-        }
-
+        $data= $this->proxy->getData();
+        $price = $this->proxy->getPairPrice("BTCUSDT");
+        array_push($ArrayPrice, $price);
         return $ArrayPrice;
     }
 

@@ -1,5 +1,8 @@
 <?php
 
+require_once 'Platform.class.php';
+require_once 'Analyser.class.php';
+
 abstract class PlatformFactory{
 
     public abstract function createFactory();
@@ -37,13 +40,14 @@ class BinancePlatform implements Platform {
 
     public function Analyse($LastPrice){
         $LastPrice= $this->_anl->AddArray($LastPrice);
-
+        print_r($LastPrice);
+/*
         $signal = $this->_anl->Analyse($LastPrice);
         if ($signal == 1){
             $this->_trd->buy(1, 1);
         }
         else if ($signal == -1){
             $this->_trd->sell(1, 1);
-        }
+        }*/
     }
 }
