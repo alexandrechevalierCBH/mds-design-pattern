@@ -11,7 +11,7 @@ class BinanceTraderFactory extends TraderFactory {
     }
 }
 
-class BinanceTrader extends Trader 
+class BinanceTrader extends Trader
 {
     public function buy($amount, $qty, $unit_price)
     {
@@ -25,7 +25,19 @@ class BinanceTrader extends Trader
 
     public function sell($amount, $qty, $unit_price)
     {
-        $bank = Banker::getOseille($amount, $qty, $unit_price);
-        echo 'Je vend de la crypto';
+        //send the operation to the database
+        $db = DBConnector::getInstance();
+        $conn = $db->getConnection();
+        $sql = "SElECT * FROM `operations` WHERE `type` = 'buy' AND `unit_price` < '$unit_price'";
+        $result = $conn->query($sql);
+        $result= mysqli_num_rows($result);
+        echo($result);
+        if ($result == 0) {
+            echo "Je ne vends pas, je suis raisonnable j'ai achété nada en dessous du prix";
+        } else {
+            $bank = Banker::getOseille($amount*$result, $qty*$result, $unit_price);
+            echo 'Je vend de la crypto';
+        }
+
     }
 }
