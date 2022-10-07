@@ -23,7 +23,6 @@ class BinancePlatform implements Platform {
 
     private Trader $_trd;
     private Analyser $_anl;
-    private array $LastPrice= array();
 
     public function __construct($trd, $anl){
         $this->_trd = $trd;
@@ -40,14 +39,21 @@ class BinancePlatform implements Platform {
 
     public function Analyse($LastPrice){
         $LastPrice= $this->_anl->AddArray($LastPrice);
-        print_r($LastPrice);
-/*
+
         $signal = $this->_anl->Analyse($LastPrice);
         if ($signal == 1){
-            $this->_trd->buy(1, 1);
+            echo "J'achéte";
+            $this->_trd->buy(1, 1,1);
+            echo "buy";
         }
         else if ($signal == -1){
-            $this->_trd->sell(1, 1);
-        }*/
+            echo "Je vends";
+            $this->_trd->sell(1, 1,1);
+            echo "sell";
+        }
+        else if ($signal == 0){
+            echo "do nothing";
+        }
+        return $LastPrice;
     }
 }
