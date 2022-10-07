@@ -2,6 +2,7 @@
 
 require_once 'Platform.class.php';
 require_once 'Analyser.class.php';
+require_once 'TraderFactory.class.php';
 
 abstract class PlatformFactory{
 
@@ -12,7 +13,8 @@ abstract class PlatformFactory{
 class BinancePlatformFactory extends PlatformFactory{
 
     public function createFactory(){
-        $trader = new Trader();
+        $trader = new BinanceTraderFactory();
+        $trader = $trader->createTrader();
         $analyser = new Analyser();
         return new BinancePlatform($trader, $analyser);
     }
