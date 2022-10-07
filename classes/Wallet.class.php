@@ -6,12 +6,11 @@ require_once 'Operation.class.php';
 class Wallet
 {
 
-    private $balance;
-    private $tempOp = [];
+    private float $balance;
+    private float $bitcoin;
 
-    public function __construct($balance)
+    public function __construct()
     {
-        $this->balance = $balance;
     }
 
     public static function getBalance()
@@ -25,20 +24,22 @@ class Wallet
         return $row['balance'];
     }
 
-    public static function feedTempOp($object)
+    public static function getbitcoin()
     {
-        $tempOp = [];
-        array_push($tempOp, $object);
+        // get the bitcoin qty from the database
+        $db = DBConnector::getInstance();
+        $conn = $db->getConnection();
+        $sql = "SELECT * FROM wallet";
+        $result = $conn->query($sql);
+        $row = $result->fetch_assoc();
+        return $row['bitcoin'];
     }
 
-    public static function updateBalance($operation)
+    public static function updateWallet($operation)
     {
         //send the operation to the database
         $db = DBConnector::getInstance();
         $conn = $db->getConnection();
-        $sql = "INSERT INTO operations (type, amount, bitcoin, date, unit_price) VALUES ('" . $operation->getType() . "', '" . $operation->getAmount() . "', '" . $operation->getbitcoin() . "', '" . $operation->getDate() . "', '" . $operation->getUnitPrice() . "')";
-        $conn->query($sql);
-        //update the balance in the database
         if ($operation->getType() === 'buy') {
             $sql = "UPDATE wallet SET balance = balance - " . $operation->getAmount();
             $conn->query($sql);
@@ -52,12 +53,14 @@ class Wallet
         }
     }
 
-    public static function testPushDB($operation)
+    public static function testPushDB($operations_buffer)
     {
-        //push the operation to the database
-        $db = DBConnector::getInstance();
-        $conn = $db->getConnection();
-        $sql = "INSERT INTO operations (type, amount, bitcoin, date, unit_price) VALUES ('" . $operation->getType() . "', '" . $operation->getAmount() . "', '" . $operation->getbitcoin() . "', '" . $operation->getDate() . "', '" . $operation->getUnitPrice() . "')";
-        $conn->query($sql);
+        foreach ($operations_buffer as $operation) {
+            self::updateWallet($operation);
+            $db = DBConnector::getInstance();
+            $conn = $db->getConnection();
+            $sql = "INSERT INTO operations (type, amount, bitcoin, date, unit_price) VALUES ('" . $operation->getType() . "', '" . $operation->getAmount() . "', '" . $operation->getbitcoin() . "', '" . $operation->getDate() . "', '" . $operation->getUnitPrice() . "')";
+            $conn->query($sql);
+        }
     }
 }
