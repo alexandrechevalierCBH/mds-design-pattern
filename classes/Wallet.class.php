@@ -9,37 +9,8 @@ class Wallet
     private float $balance;
     private float $bitcoin;
 
-    public function __construct($balance)
+    public function __construct()
     {
-        if (!file_exists('wallet.json')) {
-            $this->balance = self::getBalance();
-            $this->bitcoin = self::getBitcoin();
-            $this->save();
-        } else {
-            $this->load();
-        }
-    }
-
-    // Function to save the wallet into a json file
-    public function save()
-    {
-        $wallet = array(
-            "balance" => $this->balance,
-            "bitcoin" => $this->bitcoin
-        );
-
-        $json = json_encode($wallet);
-        file_put_contents("wallet.json", $json);
-    }
-
-    // Function to load the wallet from a file
-    public function load()
-    {
-        $json = file_get_contents("wallet.json");
-        $wallet = json_decode($json, true);
-
-        $this->balance = $wallet["balance"];
-        $this->bitcoin = $wallet["bitcoin"];
     }
 
     public static function getBalance()
@@ -64,19 +35,13 @@ class Wallet
         return $row['bitcoin'];
     }
 
-    public static function feedTempOp($object)
-    {
-        $tempOp = [];
-        array_push($tempOp, $object);
-    }
-
-    public static function updateBalance($operation)
+    public static function updateWallet($operation)
     {
         //send the operation to the database
         $db = DBConnector::getInstance();
         $conn = $db->getConnection();
-        $sql = "INSERT INTO operations (type, amount, bitcoin, date, unit_price) VALUES ('" . $operation->getType() . "', '" . $operation->getAmount() . "', '" . $operation->getbitcoin() . "', '" . $operation->getDate() . "', '" . $operation->getUnitPrice() . "')";
-        $conn->query($sql);
+        // $sql = "INSERT INTO operations (type, amount, bitcoin, date, unit_price) VALUES ('" . $operation->getType() . "', '" . $operation->getAmount() . "', '" . $operation->getbitcoin() . "', '" . $operation->getDate() . "', '" . $operation->getUnitPrice() . "')";
+        // $conn->query($sql);
         //update the balance in the database
         if ($operation->getType() === 'buy') {
             $sql = "UPDATE wallet SET balance = balance - " . $operation->getAmount();
@@ -91,12 +56,14 @@ class Wallet
         }
     }
 
-    public static function testPushDB($operation)
+    public static function testPushDB($operations_buffer)
     {
-        //push the operation to the database
-        $db = DBConnector::getInstance();
-        $conn = $db->getConnection();
-        $sql = "INSERT INTO operations (type, amount, bitcoin, date, unit_price) VALUES ('" . $operation->getType() . "', '" . $operation->getAmount() . "', '" . $operation->getbitcoin() . "', '" . $operation->getDate() . "', '" . $operation->getUnitPrice() . "')";
-        $conn->query($sql);
+        foreach ($operations_buffer as $operation) {
+            self::updateWallet($operation);
+            $db = DBConnector::getInstance();
+            $conn = $db->getConnection();
+            $sql = "INSERT INTO operations (type, amount, bitcoin, date, unit_price) VALUES ('" . $operation->getType() . "', '" . $operation->getAmount() . "', '" . $operation->getbitcoin() . "', '" . $operation->getDate() . "', '" . $operation->getUnitPrice() . "')";
+            $conn->query($sql);
+        }
     }
 }

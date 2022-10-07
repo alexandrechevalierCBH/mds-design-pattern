@@ -7,8 +7,6 @@ class DBConnector
     private $user = 'u670004846_tradebot';
     private $pass = '47Jdn8Bcr@4teZG';
     private $name = 'u670004846_tradebot';
-    private static int $lastConnectTimestamps = 0;
-
 
     /**
      * The function is private, so it can only be called from within the class. It creates a new
@@ -25,20 +23,16 @@ class DBConnector
         }
     }
 
-
     /**
-     * If it's been more than 60 seconds since the last time we connected to the database, then connect
-     * to the database
+     * > If there is no instance of the class, create one. If there is, return the existing one
      * 
      * @return The instance of the DBConnector class.
      */
     public static function getInstance()
     {
-        if (time() - self::$lastConnectTimestamps > 60) {
-            self::$lastConnectTimestamps = time();
-            if (!self::$instance) {
-                self::$instance = new DBConnector();
-            }
+        self::$instance = new DBConnector(); //TODO gérer Singleton avec Timeout SQL
+        if (!self::$instance) {
+            self::$instance = new DBConnector();
         }
         return self::$instance;
     }
