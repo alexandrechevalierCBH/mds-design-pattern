@@ -17,7 +17,7 @@ class BinanceTrader extends Trader
     {
         $bank = Banker::canBuy($amount, $qty, $unit_price);
         if ($bank) {
-            echo "Super ! J'ai acheté $qty crypto à $unit_price € l'unité. J'ai perdu $amount € :("."\n";
+            echo "Super ! J'ai acheté $qty crypto à " . round($unit_price,2) . "€ l'unité. J'ai investi " . round($amount,2) . "€ :("."\n";
         } else {
             echo "Je n'ai pas d'argent"."\n";
         }
@@ -35,7 +35,7 @@ class BinanceTrader extends Trader
             echo "Je ne vends pas, je suis raisonnable j'ai achété nada en dessous du prix"."\n";
         } else {
             $bank = Banker::getOseille($amount*$result, $qty*$result, $unit_price);
-            echo "Super ! J'ai vendu " . $result*$qty . " crypto à $unit_price € l'unité. J'ai gagné " . $amount*$result ."€"."\n";
+            echo "Super ! J'ai vendu " . $result*$qty . " crypto à ". round($unit_price,2) ."€ l'unité. J'ai gagné " . round($amount*$result,2) ."€"."\n";
         }
 
     }
