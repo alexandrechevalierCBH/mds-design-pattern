@@ -25,8 +25,6 @@ class Banker
             $unit_price = $amount / $bitcoin;
             $operation = new Operation('buy', $amount, $bitcoin, date("Y/m/d h:i:s"), $unit_price);
             self::bufferOperation($operation);
-            // Wallet::testPushDB($operation);
-            // Wallet::updateWallet($operation);
             return true;
         } else {
             return false;
@@ -38,8 +36,6 @@ class Banker
         $unit_price = $amount / $bitcoin;
         $operation = new Operation('sell', $amount, $bitcoin, date("Y/m/d h:i:s"), $unit_price);
         self::bufferOperation($operation);
-        // Wallet::testPushDB($operation);
-        // Wallet::updateWallet($operation);
     }
 
     public function createOperation($type, $amount, $bitcoin, $unit_price)
@@ -51,9 +47,10 @@ class Banker
     public static function bufferOperation($operation)
     {
         array_push(self::$operations_buffer, $operation);
-        print_r(self::$operations_buffer);
+        echo "Operation mise en buffer";
         if (count(self::$operations_buffer) >= 10) {
             Wallet::testPushDB(self::$operations_buffer);
+            echo "Buffer envoyé à la DB";
             self::$operations_buffer = array();
         }
     }

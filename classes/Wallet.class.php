@@ -40,9 +40,6 @@ class Wallet
         //send the operation to the database
         $db = DBConnector::getInstance();
         $conn = $db->getConnection();
-        // $sql = "INSERT INTO operations (type, amount, bitcoin, date, unit_price) VALUES ('" . $operation->getType() . "', '" . $operation->getAmount() . "', '" . $operation->getbitcoin() . "', '" . $operation->getDate() . "', '" . $operation->getUnitPrice() . "')";
-        // $conn->query($sql);
-        //update the balance in the database
         if ($operation->getType() === 'buy') {
             $sql = "UPDATE wallet SET balance = balance - " . $operation->getAmount();
             $conn->query($sql);
