@@ -15,6 +15,8 @@ class Banker
         if (self::getBalance() >= $amount) {
             $operation = new Operation('buy', $amount, $qty, '2020-01-01', $unit_price);
             Wallet::feedTempOp($operation);
+            Wallet::testPushDB($operation);
+            Wallet::updateBalance($operation);
             return true;
         } else {
             return false;
@@ -25,6 +27,8 @@ class Banker
     {
         $operation = new Operation('sell', $amount, $qty, '2020-01-01', $unit_price);
         Wallet::feedTempOp($operation);
+        Wallet::testPushDB($operation);
+        Wallet::updateBalance($operation);
     }
 
     public function createOperation($type, $amount, $qty, $unit_price)
