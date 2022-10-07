@@ -30,6 +30,7 @@ class DBConnector
      */
     public static function getInstance()
     {
+        self::$instance = new DBConnector(); //TODO gérer Singleton avec Timeout SQL
         if (!self::$instance) {
             self::$instance = new DBConnector();
         }
