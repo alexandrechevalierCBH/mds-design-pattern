@@ -1,6 +1,8 @@
 <?php
 
 require_once 'DBConnector.class.php';
+require_once 'Operation.class.php';
+
 class Wallet
 {
 
@@ -27,7 +29,6 @@ class Wallet
     {
         $tempOp = [];
         array_push($tempOp, $object);
-        var_dump($tempOp);
     }
 
     public static function updateBalance($operation)
@@ -41,8 +42,12 @@ class Wallet
         if ($operation->getType() === 'buy') {
             $sql = "UPDATE wallet SET balance = balance - " . $operation->getAmount();
             $conn->query($sql);
+            $sql = "UPDATE wallet SET bitcoins = bitcoins + " . $operation->getbitcoin();
+            $conn->query($sql);
         } else {
             $sql = "UPDATE wallet SET balance = balance + " . $operation->getAmount();
+            $conn->query($sql);
+            $sql = "UPDATE wallet SET bitcoins = bitcoins - " . $operation->getbitcoin();
             $conn->query($sql);
         }
     }

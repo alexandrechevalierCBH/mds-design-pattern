@@ -13,3 +13,4 @@ CREATE TABLE `u670004846_tradebot`.`wallet` (
 ) ENGINE = InnoDB;
 INSERT INTO `wallet` (`balance`, `bitcoins`)
 VALUES ('5000', NULL)
+ALTER TABLE `wallet` CHANGE `bitcoins` `bitcoins` DOUBLE NOT NULL;

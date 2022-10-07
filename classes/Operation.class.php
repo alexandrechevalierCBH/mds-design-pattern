@@ -9,7 +9,7 @@ class Operation
     private $bitcoin;
     private $unit_price;
 
-    public function __construct($type, $amount, $date, $bitcoin, $unit_price)
+    public function __construct($type, $amount, $bitcoin, $date, $unit_price)
     {
         $this->type = $type;
         $this->amount = $amount;
