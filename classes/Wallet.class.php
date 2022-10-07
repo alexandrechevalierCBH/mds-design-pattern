@@ -6,12 +6,40 @@ require_once 'Operation.class.php';
 class Wallet
 {
 
-    private $balance;
-    private $tempOp = [];
+    private float $balance;
+    private float $bitcoin;
 
     public function __construct($balance)
     {
-        $this->balance = $balance;
+        if (!file_exists('wallet.json')) {
+            $this->balance = self::getBalance();
+            $this->bitcoin = self::getBitcoin();
+            $this->save();
+        } else {
+            $this->load();
+        }
+    }
+
+    // Function to save the wallet into a json file
+    public function save()
+    {
+        $wallet = array(
+            "balance" => $this->balance,
+            "bitcoin" => $this->bitcoin
+        );
+
+        $json = json_encode($wallet);
+        file_put_contents("wallet.json", $json);
+    }
+
+    // Function to load the wallet from a file
+    public function load()
+    {
+        $json = file_get_contents("wallet.json");
+        $wallet = json_decode($json, true);
+
+        $this->balance = $wallet["balance"];
+        $this->bitcoin = $wallet["bitcoin"];
     }
 
     public static function getBalance()
@@ -23,6 +51,17 @@ class Wallet
         $result = $conn->query($sql);
         $row = $result->fetch_assoc();
         return $row['balance'];
+    }
+
+    public static function getbitcoin()
+    {
+        // get the bitcoin qty from the database
+        $db = DBConnector::getInstance();
+        $conn = $db->getConnection();
+        $sql = "SELECT * FROM wallet";
+        $result = $conn->query($sql);
+        $row = $result->fetch_assoc();
+        return $row['bitcoin'];
     }
 
     public static function feedTempOp($object)

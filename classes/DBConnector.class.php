@@ -25,8 +25,10 @@ class DBConnector
         }
     }
 
+
     /**
-     * > If there is no instance of the class, create one. If there is, return the existing one
+     * If it's been more than 60 seconds since the last time we connected to the database, then connect
+     * to the database
      * 
      * @return The instance of the DBConnector class.
      */

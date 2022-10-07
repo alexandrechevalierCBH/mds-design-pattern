@@ -10,6 +10,12 @@ class Banker
         return $balance;
     }
 
+    public static function getBitcoin()
+    {
+        $bitcoin = Wallet::getBitcoin();
+        return $bitcoin;
+    }
+
     public static function canBuy($amount, $bitcoin): bool
     {
         if (self::getBalance() >= $amount) {
@@ -26,11 +32,16 @@ class Banker
 
     public static function getOseille($amount, $bitcoin)
     {
-        $unit_price = $amount / $bitcoin;
-        $operation = new Operation('sell', $amount, $bitcoin, date("Y/m/d h:i:s"), $unit_price);
-        Wallet::feedTempOp($operation);
-        Wallet::testPushDB($operation);
-        Wallet::updateBalance($operation);
+        if (self::getBitcoin() >= $bitcoin) {
+            $unit_price = $amount / $bitcoin;
+            $operation = new Operation('sell', $amount, $bitcoin, date("Y/m/d h:i:s"), $unit_price);
+            Wallet::feedTempOp($operation);
+            Wallet::testPushDB($operation);
+            Wallet::updateBalance($operation);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function createOperation($type, $amount, $bitcoin, $unit_price)
