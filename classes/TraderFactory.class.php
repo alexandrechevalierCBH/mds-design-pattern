@@ -17,9 +17,9 @@ class BinanceTrader extends Trader
     {
         $bank = Banker::canBuy($amount, $qty, $unit_price);
         if ($bank) {
-            echo 'I buy crypto' . '<br/>';
+            echo "Super ! J'ai acheté $qty crypto à $unit_price € l'unité. J'ai perdu $amount € :("."\n";
         } else {
-            echo 'Not enouth money';
+            echo "Je n'ai pas d'argent"."\n";
         }
     }
 
@@ -28,15 +28,14 @@ class BinanceTrader extends Trader
         //send the operation to the database
         $db = DBConnector::getInstance();
         $conn = $db->getConnection();
-        $sql = "SElECT * FROM `operations` WHERE `type` = 'buy' AND `unit_price` < '$unit_price'";
+        $sql = "SElECT * FROM `operations` WHERE `type` = 'buy' AND `unit_price` < '$unit_price'"."\n";
         $result = $conn->query($sql);
         $result= mysqli_num_rows($result);
-        echo($result);
         if ($result == 0) {
-            echo "Je ne vends pas, je suis raisonnable j'ai achété nada en dessous du prix";
+            echo "Je ne vends pas, je suis raisonnable j'ai achété nada en dessous du prix"."\n";
         } else {
             $bank = Banker::getOseille($amount*$result, $qty*$result, $unit_price);
-            echo 'Je vend de la crypto';
+            echo "Super ! J'ai vendu " . $result*$qty . " crypto à $unit_price € l'unité. J'ai gagné " . $amount*$result ."€"."\n";
         }
 
     }
