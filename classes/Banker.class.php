@@ -32,21 +32,16 @@ class Banker
 
     public static function getOseille($amount, $bitcoin)
     {
-        if (self::getBitcoin() >= $bitcoin) {
-            $unit_price = $amount / $bitcoin;
-            $operation = new Operation('sell', $amount, $bitcoin, date("Y/m/d h:i:s"), $unit_price);
-            Wallet::feedTempOp($operation);
-            Wallet::testPushDB($operation);
-            Wallet::updateBalance($operation);
-            return true;
-        } else {
-            return false;
-        }
+        $unit_price = $amount / $bitcoin;
+        $operation = new Operation('sell', $amount, $bitcoin, '2020-01-01', $unit_price);
+        Wallet::feedTempOp($operation);
+        Wallet::testPushDB($operation);
+        Wallet::updateBalance($operation);
     }
 
     public function createOperation($type, $amount, $bitcoin, $unit_price)
     {
-        $operation = new Operation($type, $amount, $bitcoin, date("Y/m/d h:i:s"), $unit_price);
+        $operation = new Operation($type, $amount, $bitcoin, '2020-01-01', $unit_price);
         return $operation;
     }
 }
