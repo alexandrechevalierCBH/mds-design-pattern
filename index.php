@@ -26,5 +26,5 @@ $Platform = $Platform->createFactory();
 while(true){
     $LastPrice = $Platform->Analyse($LastPrice);
     print_r($LastPrice);
-    sleep( seconds: 10);
+    sleep( seconds: 3);
 }

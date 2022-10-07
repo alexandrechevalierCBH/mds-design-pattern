@@ -43,12 +43,16 @@ class BinancePlatform implements Platform {
         $signal = $this->_anl->Analyse($LastPrice);
         if ($signal == 1){
             echo "J'achéte";
-            $this->_trd->buy(1, 1,1);
+            $size = count($LastPrice);
+            $BTCPrice = $LastPrice[$size - 1];
+            $this->_trd->buy($BTCPrice, 1,$BTCPrice);
             echo "buy";
         }
         else if ($signal == -1){
             echo "Je vends";
-            $this->_trd->sell(1, 1,1);
+            $size = count($LastPrice);
+            $BTCPrice = $LastPrice[$size - 1];
+            $this->_trd->sell($BTCPrice, 1,$BTCPrice);
             echo "sell";
         }
         else if ($signal == 0){
