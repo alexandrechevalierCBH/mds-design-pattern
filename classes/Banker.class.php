@@ -47,10 +47,10 @@ class Banker
     public static function bufferOperation($operation)
     {
         array_push(self::$operations_buffer, $operation);
-        echo "Operation mise en buffer";
+        echo "Operation mise en buffer <br>";
         if (count(self::$operations_buffer) >= 10) {
             Wallet::testPushDB(self::$operations_buffer);
-            echo "Buffer envoyé à la DB";
+            echo "Buffer envoyé à la DB <br>";
             self::$operations_buffer = array();
         }
     }
