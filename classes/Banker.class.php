@@ -19,6 +19,14 @@ class Banker
         return $bitcoin;
     }
 
+    /**
+     * If the user has enough money, create a new operation object and add it to the buffer
+     * 
+     * @param amount the amount of bitcoin you want to buy
+     * @param bitcoin the amount of bitcoin you want to buy
+     * 
+     * @return bool A boolean value.
+     */
     public static function canBuy($amount, $bitcoin): bool
     {
         if (self::getBalance() >= $amount) {
@@ -44,6 +52,11 @@ class Banker
         return $operation;
     }
 
+    /**
+     * It pushes an operation to the buffer, and if the buffer is full, it sends it to the database
+     * 
+     * @param operation the operation to be buffered
+     */
     public static function bufferOperation($operation)
     {
         array_push(self::$operations_buffer, $operation);
