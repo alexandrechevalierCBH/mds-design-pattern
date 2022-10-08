@@ -2,24 +2,31 @@
 
 require_once 'Wallet.class.php';
 require_once 'Operation.class.php';
-class Banker
+require_once 'Bank.class.php';
+
+class Banker extends Bank
 {
     // set an array where we will store the operations
     private static $operations_buffer = array();
+    private Wallet $wallet;
 
-    public static function getBalance()
+    public function __construct(){
+        $this->wallet = new Wallet();
+    }
+
+    public function getBalance()
     {
-        $balance = Wallet::getBalance();
+        $balance = self::$wallet->getBalance();
         return $balance;
     }
 
-    public static function getBitcoin()
+    public function getBitcoin()
     {
-        $bitcoin = Wallet::getBitcoin();
+        $bitcoin = self::$wallet->getBitcoin();
         return $bitcoin;
     }
 
-    public static function canBuy($amount, $bitcoin): bool
+    public function canBuy($amount, $bitcoin): bool
     {
         if (self::getBalance() >= $amount) {
             $unit_price = $amount / $bitcoin;
@@ -27,11 +34,11 @@ class Banker
             self::bufferOperation($operation);
             return true;
         } else {
-            return false;
+            return false; 
         }
     }
 
-    public static function getOseille($amount, $bitcoin)
+    public function getOseille($amount, $bitcoin)
     {
         $unit_price = $amount / $bitcoin;
         $operation = new Operation('sell', $amount, $bitcoin, date("Y/m/d h:i:s"), $unit_price);
@@ -44,7 +51,7 @@ class Banker
         return $operation;
     }
 
-    public static function bufferOperation($operation)
+    public function bufferOperation($operation)
     {
         array_push(self::$operations_buffer, $operation);
         echo "Operation mise en buffer";
