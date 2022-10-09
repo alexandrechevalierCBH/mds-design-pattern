@@ -14,21 +14,9 @@ class Banker extends Bank
         $this->wallet = new Wallet();
     }
 
-    public function getBalance()
-    {
-        $balance = $this->wallet->getBalance();
-        return $balance;
-    }
-
-    public function getBitcoin()
-    {
-        $bitcoin = $this->wallet->getBitcoin();
-        return $bitcoin;
-    }
-
     public function canBuy($amount, $bitcoin): bool
     {
-        if (self::getBalance() >= $amount) {
+        if ($this->wallet->getBalance() >= $amount) {
             $unit_price = $amount / $bitcoin;
             $operation = new Operation('buy', $amount, $bitcoin, date("Y/m/d h:i:s"), $unit_price);
             self::bufferOperation($operation);
@@ -56,7 +44,7 @@ class Banker extends Bank
         array_push(self::$operations_buffer, $operation);
         echo "Operation mise en buffer";
         if (count(self::$operations_buffer) >= 10) {
-            Wallet::testPushDB(self::$operations_buffer);
+            $this->wallet->testPushDB(self::$operations_buffer);
             echo "Buffer envoyé à la DB";
             self::$operations_buffer = array();
         }

@@ -11,8 +11,8 @@ require_once 'classes/PlatformFactory.class.php';
 
 $LastPrice= array();
 
-$db = DBConnector::getInstance()->getConnection();
-$balance = Wallet::getBalance();
+//$db = DBConnector::getInstance()->getConnection();
+//$balance = Wallet::getBalance();
 /*
 $testbuy = new Trader();
 $testbuy->buy(5005, 1, 20000.34);

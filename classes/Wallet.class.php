@@ -13,7 +13,7 @@ class Wallet
     {
     }
 
-    public static function getBalance()
+    public function getBalance()
     {
         // get the balance from the database
         $db = DBConnector::getInstance();
@@ -24,7 +24,7 @@ class Wallet
         return $row['balance'];
     }
 
-    public static function getbitcoin()
+    public function getBddBitcoin()
     {
         // get the bitcoin qty from the database
         $db = DBConnector::getInstance();
@@ -53,7 +53,7 @@ class Wallet
         }
     }
 
-    public static function testPushDB($operations_buffer)
+    public function testPushDB($operations_buffer)
     {
         foreach ($operations_buffer as $operation) {
             self::updateWallet($operation);
