@@ -16,13 +16,13 @@ class Banker extends Bank
 
     public function getBalance()
     {
-        $balance = self::$wallet->getBalance();
+        $balance = $this->wallet->getBalance();
         return $balance;
     }
 
     public function getBitcoin()
     {
-        $bitcoin = self::$wallet->getBitcoin();
+        $bitcoin = $this->wallet->getBitcoin();
         return $bitcoin;
     }
 
