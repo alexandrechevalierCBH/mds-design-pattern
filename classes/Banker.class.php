@@ -42,10 +42,9 @@ class Banker extends Bank
     public function bufferOperation($operation)
     {
         array_push(self::$operations_buffer, $operation);
-        echo "Operation mise en buffer";
         if (count(self::$operations_buffer) >= 10) {
             $this->wallet->testPushDB(self::$operations_buffer);
-            echo "Buffer envoyé à la DB";
+            echo "------------- Buffer envoyé à la DB -------------"."\n";
             self::$operations_buffer = array();
         }
     }

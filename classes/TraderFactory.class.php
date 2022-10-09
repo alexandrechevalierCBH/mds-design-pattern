@@ -18,9 +18,9 @@ class BinanceTrader extends Trader
         $bank = new Banker;
         $bank->canBuy($amount, $qty, $unit_price);
         if ($bank) {
-            echo "Super ! J'ai acheté $qty crypto à " . round($unit_price,2) . "€ l'unité. J'ai investi " . round($amount,2) . "€ :("."\n";
+            echo "Achat de $qty BTC au prix de " . round($unit_price,2) . "€ l'unité. Prix total : " . round($amount,2) . "€"."\n";
         } else {
-            echo "Je n'ai pas d'argent"."\n";
+            echo "Fonds insuffisants"."\n";
         }
     }
 
@@ -32,12 +32,13 @@ class BinanceTrader extends Trader
         $sql = "SElECT * FROM `operations` WHERE `type` = 'buy' AND `unit_price` < '$unit_price'"."\n";
         $result = $conn->query($sql);
         $result= mysqli_num_rows($result);
+        var_dump($result);
         if ($result == 0) {
-            echo "Je ne vends pas, je suis raisonnable j'ai achété nada en dessous du prix"."\n";
+            echo "Tendance à la vente mais pas de profits réalisables"."\n";
         } else {
             $bank = new Banker;
             $bank->getOseille($amount*$result, $qty*$result, $unit_price);
-            echo "Super ! J'ai vendu " . $result*$qty . " crypto à ". round($unit_price,2) .
+            echo "Vente de " . $result*$qty . " BTC pour ". round($unit_price,2) .
             "€ l'unité. J'ai gagné " . round($amount*$result,2) ."€"."\n";
             $sql = "UPDATE `operations` SET `type` = 'sale' WHERE `type` = 'buy' AND `unit_price` < '$unit_price'"."\n";
             $result = $conn->query($sql);
