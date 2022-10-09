@@ -59,7 +59,10 @@ class Wallet
             self::updateWallet($operation);
             $db = DBConnector::getInstance();
             $conn = $db->getConnection();
-            $sql = "INSERT INTO operations (type, amount, bitcoin, date, unit_price) VALUES ('" . $operation->getType() . "', '" . $operation->getAmount() . "', '" . $operation->getbitcoin() . "', '" . $operation->getDate() . "', '" . $operation->getUnitPrice() . "')";
+            $sql = "INSERT INTO operations (type, amount, bitcoin, date, unit_price) 
+            VALUES ('" . $operation->getType() . "', '" . $operation->getAmount() . 
+            "', '" . $operation->getbitcoin() . "', '" . $operation->getDate() . "', '" . 
+            $operation->getUnitPrice() . "')";
             $conn->query($sql);
         }
     }

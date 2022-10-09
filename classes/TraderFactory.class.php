@@ -37,7 +37,10 @@ class BinanceTrader extends Trader
         } else {
             $bank = new Banker;
             $bank->getOseille($amount*$result, $qty*$result, $unit_price);
-            echo "Super ! J'ai vendu " . $result*$qty . " crypto à ". round($unit_price,2) ."€ l'unité. J'ai gagné " . round($amount*$result,2) ."€"."\n";
+            echo "Super ! J'ai vendu " . $result*$qty . " crypto à ". round($unit_price,2) .
+            "€ l'unité. J'ai gagné " . round($amount*$result,2) ."€"."\n";
+            $sql = "UPDATE `operations` SET `type` = 'sale' WHERE `type` = 'buy' AND `unit_price` < '$unit_price'"."\n";
+            $result = $conn->query($sql);
         }
 
     }
